@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Legislative Analyzer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to right, #eef2ff, #f8fafc);
+}
+
+/* HEADER */
+.header {
+    background: #0f172a;
+    color: white;
+    padding: 18px 40px;
+    font-size: 20px;
+}
+
+/* HERO IMAGE FIX */
+.hero {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* MAIN CONTAINER */
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 15px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* CARD IMAGE FIX */
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* INPUT */
+textarea {
+    width: 100%;
+    height: 160px;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    resize: none;
+}
+
+/* BUTTON */
+button {
+    margin-top: 15px;
+    padding: 14px 22px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1e40af;
+}
+
+/* OUTPUT */
+.output {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+/* HIGHLIGHT */
+.highlight {
+    background: yellow;
+    font-weight: 500;
+}
+
+/* LOADING */
+.loading {
+    color: #2563eb;
+    font-weight: 500;
+}
+
+li {
+    margin-bottom: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">⚖️ AI Legislative Analyzer</div>
+
+<!-- HERO IMAGE -->
+<div class="hero">
+    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f">
+</div>
+
+<!-- MAIN -->
+<div class="container">
+<div class="card">
+
+<!-- CARD IMAGE -->
+<img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85">
+
+<h2>Analyze Legal Document</h2>
+
+<textarea id="text" placeholder="Paste legal content here..."></textarea>
+
+<button onclick="send()">Analyze</button>
+
+<div class="output" id="output">
+    Results will appear here.
+</div>
+
+</div>
+</div>
+
+<script>
+
+/* Highlight keywords */
+function highlight(text) {
+    const keywords = ["law", "penalty", "must", "shall", "violation", "rights"];
+    keywords.forEach(word => {
+        const regex = new RegExp(word, "gi");
+        text = text.replace(regex, `<span class="highlight">${word}</span>`);
+    });
+    return text;
+}
+
+/* MAIN FUNCTION */
+async function send() {
+    const text = document.getElementById("text").value;
+    const output = document.getElementById("output");
+
+    if (!text.trim()) {
+        output.innerHTML = "Please enter some text.";
+        return;
+    }
+
+    output.innerHTML = "<span class='loading'>Processing...</span>";
+
+    try {
+        const res = await fetch("https://ai-legislative-analyzer-7.onrender.com/api/search", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ query: text })
+        });
+
+        const data = await res.json();
+
+        if (data.results && data.results.length > 0) {
+            output.innerHTML = "<ul>" +
+                data.results.map(r => `<li>${highlight(r)}</li>`).join("") +
+                "</ul>";
+        } else {
+            output.innerHTML = "No results found.";
+        }
+
+    } catch (error) {
+        output.innerHTML = "Error connecting to server.";
+    }
+}
+</script>
+
+</body>
+</html>
