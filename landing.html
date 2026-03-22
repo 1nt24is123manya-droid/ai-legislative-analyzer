@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Legislative Analyzer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to right, #eef2ff, #f8fafc);
+}
+
+/* NAVBAR */
+.navbar {
+    background: #0f172a;
+    color: white;
+    padding: 18px 50px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* HERO */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px;
+}
+
+.text h1 {
+    font-size: 40px;
+}
+
+.text p {
+    color: #475569;
+    line-height: 1.6;
+}
+
+button {
+    margin-top: 20px;
+    padding: 14px 24px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1e40af;
+}
+
+.hero img {
+    width: 420px;
+    border-radius: 12px;
+}
+
+/* FEATURES */
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 60px;
+}
+
+.feature {
+    width: 250px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.feature img {
+    width: 60px;
+}
+
+/* BOX */
+#featureBox {
+    max-width: 800px;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: #64748b;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">AI Legislative Analyzer</div>
+
+<div class="hero">
+    <div class="text">
+        <h1>Transform Legal Documents into Insights</h1>
+        <p>Analyze policies, laws, and documents with intelligent automation.</p>
+        <button onclick="goToApp()">Get Started</button>
+    </div>
+
+    <img src="https://images.unsplash.com/photo-1581091215367-59ab6b6e9c0c">
+</div>
+
+<div class="features">
+
+<div class="feature" onclick="showFeature('analysis')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png">
+    <h3>Smart Analysis</h3>
+    <p>Extract insights</p>
+</div>
+
+<div class="feature" onclick="showFeature('summary')">
+    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+    <h3>Summarization</h3>
+    <p>Shorten documents</p>
+</div>
+
+<div class="feature" onclick="showFeature('speed')">
+    <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png">
+    <h3>Fast Processing</h3>
+    <p>Instant results</p>
+</div>
+
+</div>
+
+<div id="featureBox"></div>
+
+<div class="footer">Intelligent legal document processing system</div>
+
+<script>
+function goToApp() {
+    window.location.href = "app.html";
+}
+
+function showFeature(type) {
+    const box = document.getElementById("featureBox");
+    box.style.display = "block";
+
+    if (type === "analysis") {
+        box.innerHTML = `
+        <h3>Smart Analysis</h3>
+        <ul>
+            <li>Identifies key legal clauses</li>
+            <li>Extracts obligations and penalties</li>
+            <li>Highlights important statements</li>
+        </ul>`;
+    }
+
+    if (type === "summary") {
+        box.innerHTML = `
+        <h3>Summarization</h3>
+        <ul>
+            <li>Reduces long documents</li>
+            <li>Provides clear key points</li>
+            <li>Saves reading time</li>
+        </ul>`;
+    }
+
+    if (type === "speed") {
+        box.innerHTML = `
+        <h3>Fast Processing</h3>
+        <ul>
+            <li>Processes large documents quickly</li>
+            <li>Efficient chunking algorithm</li>
+            <li>Instant results</li>
+        </ul>`;
+    }
+}
+</script>
+
+</body>
+</html>
+  
